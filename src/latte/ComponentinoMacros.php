@@ -1,6 +1,6 @@
 <?php
 
-namespace Varhall\Componentino\UI;
+namespace Varhall\Componentino\Latte;
 
 use Latte\CompileException;
 use Latte\Macros\BlockMacros;

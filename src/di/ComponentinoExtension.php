@@ -2,49 +2,41 @@
 
 namespace Varhall\Componentino\DI;
 
-use Nette\DI\Config\Helpers;
-use Varhall\Componentino\Services\ComponentFactory;
+use Latte\Engine;
+use Nette\Bridges\ApplicationLatte\LatteFactory;
+use Nette\DI\Definitions\FactoryDefinition;
+use Nette\DI\Definitions\ServiceDefinition;
+use Nette\DI\Definitions\Statement;
+use Varhall\Componentino\Latte\ComponentinoMacros;
+use Varhall\Componentino\Latte\UIExtension;
 
-/**
- * Description of ComponentinoExtension
- *
- * @author fero
- */
+
 class ComponentinoExtension extends \Nette\DI\CompilerExtension
 {
-    protected function configuration()
-    {
-        return Helpers::merge($this->getConfig(), [
-            'components'    => [],
-        ]);
-    }
-
-    /**
-     * Processes configuration data
-     *
-     * @return void
-     */
-    public function loadConfiguration()
+    public function loadConfiguration(): void
     {
         $builder = $this->getContainerBuilder();
 
         $builder->addDefinition($this->prefix('componentino'))
             ->setFactory('Varhall\Componentino\Services\ComponentFactory');
-    }
 
-    public function beforeCompile()
-    {
-        parent::beforeCompile();
 
-        $config = $this->configuration();
-        $builder = $this->getContainerBuilder();
+        // register Latte extension
+        try {
+            $latteFactory = $builder->getDefinitionByType(LatteFactory::class);
+            \assert($latteFactory instanceof FactoryDefinition);
 
-        foreach ($builder->findByType(ComponentFactory::class) as $definition) {
-            foreach ($config['components'] as $component) {
-                $definition->addSetup('registerComponent', [ $component ]);
+            $definition = $latteFactory->getResultDefinition();
+            \assert($definition instanceof ServiceDefinition);
+
+            // @phpstan-ignore-next-line latte 2 compatibility
+            if (\version_compare(Engine::VERSION, '3', '<')) {
+                $definition->addSetup('?->onCompile[] = function ($engine) { ' . ComponentinoMacros::class . '::install($engine->getCompiler()); }', ['@self']);
+            } else {
+                $definition->addSetup('addExtension', [new Statement(UIExtension::class)]);
             }
+        } catch (MissingServiceException $e) {
+            // ignore
         }
     }
-
-
 }

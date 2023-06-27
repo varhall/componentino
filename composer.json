@@ -1,0 +1,43 @@
+{
+	"name": "varhall/componentino",
+	"type": "library",
+	"description": "Nette Enhanced Interactive Components",
+	"keywords": ["nette", "components"],
+	"homepage": "https://github.com/varhall/componentino",
+	"license": "MIT",
+        "authors": [
+		{
+			"name": "Ondrej Sibrava",
+			"homepage": "https://www.varhall.cz"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/varhall/componentino"
+	},
+
+	"require": {
+		"php": ">=8.0",
+		"nette/application": "^v3.1",
+		"nette/di": "^3.1",
+		"nette/utils": "^v3.2"
+	},
+
+	"require-dev": {
+		"ninjify/nunjuck": "^v0.4",
+		"ninjify/qa": "^v0.13",
+		"mockery/mockery": "^1.6",
+		"nette/bootstrap": "^v3.2",
+		"nette/robot-loader": "v4.0",
+		"nette/http": "^v3.1"
+	},
+
+	"autoload": {
+		"classmap": ["src/"]
+	},
+
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}

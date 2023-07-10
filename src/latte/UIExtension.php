@@ -10,7 +10,7 @@ class UIExtension extends Extension
     {
         return [
             'component'     => [ ComponentNode::class, 'create' ],
-            //'errorClass'    => [ static::class, 'macroErrorClass' ]
+            'errorClass'    => [ ErrorClassNode::class, 'create' ]
         ];
     }
 }

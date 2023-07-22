@@ -40,7 +40,7 @@ abstract class NestedForm extends Component implements Control
      */
     public function getValue()
     {
-        return $this->form->getValues();
+        return $this->form->getUntrustedValues();
     }
 
     public function validate(): void

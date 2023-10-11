@@ -40,6 +40,24 @@ abstract class Component extends \Nette\Application\UI\Control
         return $this;
     }
 
+    /**
+     * Add event handler on component
+     *
+     * @param string $event Event name
+     * @param callable $action Action handler
+     * @return Component
+     */
+    public function on($event, callable $action)
+    {
+        $name = 'on' . ucfirst(strtolower($event));
+
+        if (property_exists($this, $name) && is_array($this->$name)) {
+            $this->$name[] = $action;
+        }
+
+        return $this;
+    }
+
     protected function templateFile()
     {
         $reflection = new \ReflectionClass($this);

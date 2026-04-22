@@ -73,13 +73,8 @@ abstract class Component extends \Nette\Application\UI\Control
         return "component--{$name}";
     }
 
-    public function render($args = [])
+    public function render(...$args)
     {
-        /*foreach ($args as $name => $value) {
-            if (isset($this->$name))
-                $this->$name = $value;
-        }*/
-
         $this->draw((object) $args);
 
         $classes = [

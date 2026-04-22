@@ -12,11 +12,11 @@ class Form extends \Nette\Application\UI\Form
     /** @var IFormStyle */
     public $style = null;
 
-    public function __construct(Nette\ComponentModel\IContainer $parent = null, string $name = null)
+    public function __construct(?Nette\ComponentModel\IContainer $parent = null, ?string $name = null)
     {
         parent::__construct($parent, $name);
 
-        $this->style = new Bootstrap4FormStyle();
+        $this->style = new Bootstrap5FormStyle();
         $this->onRender[] = function() {
             $this->style->setup($this);
         };

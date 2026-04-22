@@ -7,12 +7,12 @@ use Varhall\Componentino\UI\Component;
 
 abstract class NestedForm extends Component implements Control
 {
-    /** @var \Nette\Forms\Container */
+    /** @var \Varhall\Restino\runtime\vendor\nette\forms\src\Forms\Container */
     public $form = null;
 
     public function __construct()
     {
-        $this->form = new \Nette\Forms\Container();
+        $this->form = new \Varhall\Restino\runtime\vendor\nette\forms\src\Forms\Container();
         $this->addComponent($this->form, 'form');
 
         $this->initializeControls();

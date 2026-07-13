@@ -89,7 +89,6 @@ trait ComponentTrait
             } else if (method_exists($component, $restoreMethod)) {
                 $class = new \ReflectionClass(get_class($component));
                 $method = $class->getMethod($restoreMethod);
-                $method->setAccessible(true);
 
                 $cmp = $method->invokeArgs($component, [ $identifier ]);
                 $component->addComponent($cmp, $receiver);
@@ -135,7 +134,6 @@ trait ComponentTrait
         while ($class) {
             try {
                 $prop = $class->getProperty($property);
-                $prop->setAccessible(true);
 
                 return $prop->getValue($this);
 
